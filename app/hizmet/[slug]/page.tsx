@@ -123,7 +123,15 @@ export default async function HizmetDetayPage({ params }: { params: Promise<{ sl
                         <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm">
                             <h3 className={`${playfair.className} text-xl font-bold text-slate-900 mb-4`}>Profesyonel Destek Alın</h3>
                             <p className="text-slate-600 mb-6 text-sm leading-relaxed">{hizmet.baslik} konusunda uzman ekibimizle görüşmek için bize ulaşın.</p>
-                            <button className="w-full py-4 bg-slate-900 text-white rounded-xl font-semibold hover:bg-slate-800 transition flex items-center justify-center gap-2 group shadow-lg"><span>Bizi Arayın</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 group-hover:translate-x-1 transition-transform"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></button>
+                            
+                            {/* DÜZELTİLEN KISIM: BUTON YERİNE ARAMA LİNKİ */}
+                            <a href="tel:05447211523" className="w-full py-4 bg-slate-900 text-white rounded-xl font-semibold hover:bg-slate-800 transition flex items-center justify-center gap-2 group shadow-lg">
+                                <span>Bizi Arayın</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 group-hover:translate-x-1 transition-transform">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
+                            </a>
+
                             <div className="mt-4 pt-4 border-t border-gray-200 text-center"><Link href="/" className="text-sm text-slate-500 hover:text-slate-900 font-medium">Diğer Hizmetlere Göz At</Link></div>
                         </div>
                     </div>
