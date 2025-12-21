@@ -178,14 +178,72 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
             <div className="lg:col-span-2 space-y-12">
                 <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
                     <h3 className={`${playfair.className} text-2xl font-bold text-slate-900 mb-8 pb-4 border-b border-gray-100 flex items-center gap-3`}>İlan Özellikleri</h3>
+                    
+                    {/* ÖZELLİKLER GRID */}
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 gap-x-6 pb-8 border-b border-gray-100">
-                        <div><span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Metrekare</span><span className="text-slate-900 font-bold text-xl flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">📏</span> {ilan.metrekare} m²</span></div>
-                        <div><span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Oda Sayısı</span><span className="text-slate-900 font-bold text-xl flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🚪</span> {ilan.oda_sayisi}</span></div>
-                        {ilan.bina_yasi && <div><span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Bina Yaşı</span><span className="text-slate-900 font-bold text-xl flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🏢</span> {ilan.bina_yasi} Yaşında</span></div>}
-                        {ilan.bulundugu_kat && <div><span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Kat</span><span className="text-slate-900 font-bold text-xl flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🔼</span> {ilan.bulundugu_kat}. Kat</span></div>}
-                        {ilan.isitma && <div><span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Isıtma</span><span className="text-slate-900 font-bold text-xl flex items-center gap-2"><span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🔥</span> {ilan.isitma}</span></div>}
-                        <div className="col-span-2 md:col-span-1 pt-1"><span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Durum</span><div className="flex flex-wrap gap-2">{ilan.esyali && <span className="text-xs font-bold text-green-700 bg-green-50 px-3 py-1 rounded-lg border border-green-200">Eşyalı</span>}{ilan.krediye_uygun && <span className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-lg border border-purple-200">Krediye Uygun</span>}</div></div>
+                        
+                        {/* Metrekare */}
+                        <div>
+                            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Metrekare</span>
+                            <span className="text-slate-900 font-bold text-xl flex items-center gap-2">
+                                <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">📏</span> 
+                                {ilan.metrekare} m²
+                            </span>
+                        </div>
+                        
+                        {/* Oda Sayısı */}
+                        <div>
+                            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Oda Sayısı</span>
+                            <span className="text-slate-900 font-bold text-xl flex items-center gap-2">
+                                <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🚪</span> 
+                                {ilan.oda_sayisi}
+                            </span>
+                        </div>
+                        
+                        {/* Bina Yaşı (DÜZELTİLDİ: 0 olsa bile göster) */}
+                        {(ilan.bina_yasi !== null && ilan.bina_yasi !== undefined) && (
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Bina Yaşı</span>
+                                <span className="text-slate-900 font-bold text-xl flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🏢</span> 
+                                    {ilan.bina_yasi} Yaşında
+                                </span>
+                            </div>
+                        )}
+                        
+                        {/* Kat (DÜZELTİLDİ: 0 olsa bile göster) */}
+                        {(ilan.bulundugu_kat !== null && ilan.bulundugu_kat !== undefined) && (
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Kat</span>
+                                <span className="text-slate-900 font-bold text-xl flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🔼</span> 
+                                    {ilan.bulundugu_kat}. Kat
+                                </span>
+                            </div>
+                        )}
+                        
+                        {/* Isıtma */}
+                        {ilan.isitma && (
+                            <div>
+                                <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Isıtma</span>
+                                <span className="text-slate-900 font-bold text-xl flex items-center gap-2">
+                                    <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">🔥</span> 
+                                    {ilan.isitma}
+                                </span>
+                            </div>
+                        )}
+                        
+                        {/* Durum */}
+                        <div className="col-span-2 md:col-span-1 pt-1">
+                            <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Durum</span>
+                            <div className="flex flex-wrap gap-2">
+                                {ilan.esyali && <span className="text-xs font-bold text-green-700 bg-green-50 px-3 py-1 rounded-lg border border-green-200">Eşyalı</span>}
+                                {ilan.krediye_uygun && <span className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-lg border border-purple-200">Krediye Uygun</span>}
+                            </div>
+                        </div>
+
                     </div>
+                    
                     <FeaturesList title="İç Özellikler" items={icDonanimlar} />
                     <FeaturesList title="Dış Özellikler" items={disDonanimlar} />
                 </div>
