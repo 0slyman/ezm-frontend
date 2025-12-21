@@ -143,7 +143,10 @@ export default async function Home() {
                         <Link key={ilan.id} href={`/ilanlar/${ilan.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-teal-100 hover:shadow-xl transition-all">
                             <div className="h-56 md:h-64 relative overflow-hidden">
                                 {kapak ? (
-                                    <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+                                  <img 
+                                      src={kapak.startsWith('http') ? kapak : `https://ezm-backend-production.up.railway.app${kapak}`} 
+                                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                  />
                                 ) : (<div className="w-full h-full bg-slate-200"></div>)}
                                 <span className={`absolute top-3 left-3 text-white px-2 py-1 rounded text-xs font-bold ${ilan.Kategori === 'Satılık' ? 'bg-red-600' : 'bg-blue-600'}`}>
                                     {ilan.Kategori}
