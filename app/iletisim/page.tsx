@@ -14,7 +14,7 @@ export default function IletisimPage() {
     setStatus("loading");
 
     try {
-      const res = await fetch("http://localhost:1337/api/iletisims", {
+      const res = await fetch("https://ezm-backend-production.up.railway.app/api/iletisims", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data: formData }),

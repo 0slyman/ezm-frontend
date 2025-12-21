@@ -17,7 +17,7 @@ export default function BlogInteraction({ makaleId }: { makaleId: number }) {
   useEffect(() => {
     async function fetchComments() {
       try {
-        const res = await fetch(`http://localhost:1337/api/yorums?filters[makale][id][$eq]=${makaleId}&sort=tarih:desc`);
+        const res = await fetch(`https://ezm-backend-production.up.railway.app/api/yorums?filters[makale][id][$eq]=${makaleId}&sort=tarih:desc`);
         const json = await res.json();
         setCommentsList(json.data || []);
       } catch (err) {
@@ -48,7 +48,7 @@ export default function BlogInteraction({ makaleId }: { makaleId: number }) {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:1337/api/yorums", {
+      const res = await fetch("https://ezm-backend-production.up.railway.app/api/yorums", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

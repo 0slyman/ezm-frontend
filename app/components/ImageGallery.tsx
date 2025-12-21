@@ -61,7 +61,7 @@ export default function ImageGallery({ gorseller }: { gorseller: any[] }) {
         >
             {mainImage ? (
                 <img 
-                    src={`http://localhost:1337${mainImage}`} 
+                    src={`https://ezm-backend-production.up.railway.app${mainImage}`} 
                     className="w-full h-full object-cover w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                     alt="Ana Görsel"
                 />
@@ -82,7 +82,7 @@ export default function ImageGallery({ gorseller }: { gorseller: any[] }) {
                     onClick={() => openLightbox(index + 1)}
                 >
                     <img 
-                        src={`http://localhost:1337${img.url}`} 
+                        src={`https://ezm-backend-production.up.railway.app${img.url}`} 
                         className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                         alt={`Görsel ${index + 2}`}
                     />
@@ -123,7 +123,7 @@ export default function ImageGallery({ gorseller }: { gorseller: any[] }) {
             {/* 3. ANA GÖRSEL */}
             <div className="relative max-w-7xl max-h-[85vh] w-full h-full p-4 flex items-center justify-center">
                 <img 
-                    src={`http://localhost:1337${gorseller[photoIndex].url}`} 
+                    src={`https://ezm-backend-production.up.railway.app${gorseller[photoIndex].url}`} 
                     className="max-w-full max-h-full object-contain shadow-2xl rounded-lg"
                     alt="Büyük Görsel"
                 />

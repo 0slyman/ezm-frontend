@@ -7,7 +7,7 @@ const playfair = Playfair_Display({ subsets: ['latin'], display: 'swap' });
 
 async function getHizmetler() {
   try {
-    const res = await fetch("http://localhost:1337/api/hizmets?populate=*", { cache: 'no-store' });
+    const res = await fetch("https://ezm-backend-production.up.railway.app/api/hizmets?populate=*", { cache: 'no-store' });
     if (!res.ok) throw new Error("Hata");
     return res.json();
   } catch (error) { return { data: [] }; }
@@ -15,7 +15,7 @@ async function getHizmetler() {
 
 async function getPopulerIlanlar() {
   try {
-    const res = await fetch("http://localhost:1337/api/ilans?filters[goruntulenme][$gt]=0&sort=goruntulenme:desc&pagination[limit]=6&populate=*", { cache: 'no-store' });
+    const res = await fetch("https://ezm-backend-production.up.railway.app/api/ilans?filters[goruntulenme][$gt]=0&sort=goruntulenme:desc&pagination[limit]=6&populate=*", { cache: 'no-store' });
     if (!res.ok) throw new Error("Hata");
     return res.json();
   } catch (error) { return { data: [] }; }
@@ -23,7 +23,7 @@ async function getPopulerIlanlar() {
 
 async function getPopulerMakaleler() {
   try {
-    const res = await fetch("http://localhost:1337/api/makales?filters[goruntulenme][$gt]=0&sort=goruntulenme:desc&pagination[limit]=3&populate=*", { cache: 'no-store' });
+    const res = await fetch("https://ezm-backend-production.up.railway.app/api/makales?filters[goruntulenme][$gt]=0&sort=goruntulenme:desc&pagination[limit]=3&populate=*", { cache: 'no-store' });
     if (!res.ok) throw new Error("Hata");
     return res.json();
   } catch (error) { return { data: [] }; }
@@ -109,7 +109,7 @@ export default async function Home() {
                 <div className="w-24 h-24 md:w-32 md:h-32 bg-slate-50 text-slate-700 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform overflow-hidden shadow-inner p-4 group-hover:bg-slate-100">
                   {ikonUrl ? (
                     // DÜZELTME: İkonun kutuya tam sığması için object-contain korundu
-                    <img src={`http://localhost:1337${ikonUrl}`} alt={hizmet.baslik} className="w-full h-full object-contain" />
+                    <img src={`https://ezm-backend-production.up.railway.app${ikonUrl}`} alt={hizmet.baslik} className="w-full h-full object-contain" />
                   ) : (
                     // DÜZELTME: Varsayılan ikon da büyütüldü
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 md:w-16 md:h-16"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
@@ -143,7 +143,7 @@ export default async function Home() {
                         <Link key={ilan.id} href={`/ilanlar/${ilan.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-teal-100 hover:shadow-xl transition-all">
                             <div className="h-56 md:h-64 relative overflow-hidden">
                                 {kapak ? (
-                                    <img src={`http://localhost:1337${kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+                                    <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
                                 ) : (<div className="w-full h-full bg-slate-200"></div>)}
                                 <span className={`absolute top-3 left-3 text-white px-2 py-1 rounded text-xs font-bold ${ilan.Kategori === 'Satılık' ? 'bg-red-600' : 'bg-blue-600'}`}>
                                     {ilan.Kategori}
@@ -190,7 +190,7 @@ export default async function Home() {
                         <Link key={blog.id} href={`/blog/${blog.slug}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-teal-100">
                             <div className="h-48 relative overflow-hidden">
                                 {kapak ? (
-                                    <img src={`http://localhost:1337${kapak}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                    <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                                 ) : (<div className="w-full h-full bg-slate-200"></div>)}
                                 <div className="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1 rounded text-xs font-bold text-slate-900">
                                     {formatDate(blog.tarih) || "Blog"}

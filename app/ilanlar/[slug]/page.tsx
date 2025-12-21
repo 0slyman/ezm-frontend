@@ -10,7 +10,7 @@ const playfair = Playfair_Display({ subsets: ['latin'] });
 // --- VERİ ÇEKME ---
 async function getIlan(slug: string) {
   try {
-    const res = await fetch(`http://localhost:1337/api/ilans?filters[slug][$eq]=${slug}&populate[0]=gorseller&populate[1]=ic_donanimlar&populate[2]=dis_donanimlar`, { cache: 'no-store' });
+    const res = await fetch(`https://ezm-backend-production.up.railway.app/api/ilans?filters[slug][$eq]=${slug}&populate[0]=gorseller&populate[1]=ic_donanimlar&populate[2]=dis_donanimlar`, { cache: 'no-store' });
     if (!res.ok) throw new Error("Veri getirilemedi");
     const json = await res.json();
     return json.data[0]; 
@@ -20,7 +20,7 @@ async function getIlan(slug: string) {
 async function getBenzerIlanlar(kategori: string, emlak_tipi: string, currentSlug: string) {
   try {
     let filterQuery = `filters[Kategori][$eq]=${kategori}&filters[emlak_tipi][$eq]=${emlak_tipi}&filters[slug][$ne]=${currentSlug}`;
-    const res = await fetch(`http://localhost:1337/api/ilans?${filterQuery}&pagination[limit]=4&sort=publishedAt:desc&populate=gorseller`, { cache: 'no-store' });
+    const res = await fetch(`https://ezm-backend-production.up.railway.app/api/ilans?${filterQuery}&pagination[limit]=4&sort=publishedAt:desc&populate=gorseller`, { cache: 'no-store' });
     if (!res.ok) return [];
     const json = await res.json();
     return json.data;
@@ -29,7 +29,7 @@ async function getBenzerIlanlar(kategori: string, emlak_tipi: string, currentSlu
 
 async function getGlobalData() {
     try {
-      const res = await fetch("http://localhost:1337/api/global", { cache: 'no-store' });
+      const res = await fetch("https://ezm-backend-production.up.railway.app/api/global", { cache: 'no-store' });
       const json = await res.json();
       return json.data;
     } catch (error) { return null; }
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${ilan.baslik} | EZM Gayrimenkul`,
       description: `Fiyat: ${fiyat} - ${ilan.konum}`,
-      images: kapak ? [{ url: `http://localhost:1337${kapak}` }] : [],
+      images: kapak ? [{ url: `https://ezm-backend-production.up.railway.app${kapak}` }] : [],
     },
   };
 }
@@ -129,7 +129,7 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
     '@type': 'Product',
     name: ilan.baslik,
     description: metaDescription,
-    image: gorseller?.[0]?.url ? `http://localhost:1337${gorseller[0].url}` : undefined,
+    image: gorseller?.[0]?.url ? `https://ezm-backend-production.up.railway.app${gorseller[0].url}` : undefined,
     offers: {
       '@type': 'Offer',
       priceCurrency: 'TRY',
@@ -207,7 +207,7 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
                                 const b_fiyat = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(b.fiyat);
                                 return (
                                     <Link key={b.id} href={`/ilanlar/${b.slug}`} className="group flex gap-3 items-start p-2 rounded-xl hover:bg-slate-50 transition-colors">
-                                        <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-slate-200 relative">{b_kapak && <img src={`http://localhost:1337${b_kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}</div>
+                                        <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-slate-200 relative">{b_kapak && <img src={`https://ezm-backend-production.up.railway.app${b_kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}</div>
                                         <div className="flex-grow"><h4 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-teal-600 transition-colors">{b.baslik}</h4><p className="text-teal-700 font-bold text-xs mt-1">{b_fiyat}</p><div className="text-[10px] text-slate-400 mt-1 flex items-center gap-2"><span>{b.emlak_tipi}</span><span>•</span><span>{b.konum?.split(" ")[0]}</span></div></div>
                                     </Link>
                                 )

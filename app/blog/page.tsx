@@ -5,7 +5,7 @@ const playfair = Playfair_Display({ subsets: ['latin'] });
 
 async function getMakaleler() {
   try {
-    const res = await fetch("http://localhost:1337/api/makales?populate=*&sort=publishedAt:desc", { cache: 'no-store' });
+    const res = await fetch("https://ezm-backend-production.up.railway.app/api/makales?populate=*&sort=publishedAt:desc", { cache: 'no-store' });
     if (!res.ok) throw new Error("Hata");
     return res.json();
   } catch (error) { return { data: [] }; }
@@ -39,7 +39,7 @@ export default async function BlogPage() {
                     <Link key={blog.id} href={`/blog/${blog.slug}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-teal-100 flex flex-col h-full">
                         <div className="h-56 relative overflow-hidden">
                             {kapak ? (
-                                <img src={`http://localhost:1337${kapak}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                             ) : (<div className="w-full h-full bg-teal-100"></div>)}
                             <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-bold text-slate-900 shadow-sm">
                                 {formatDate(blog.publishedAt)}

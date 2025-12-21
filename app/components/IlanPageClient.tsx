@@ -150,7 +150,7 @@ export default function IlanPageClient({ initialIlanlar }: { initialIlanlar: any
                         
                         <div className="relative h-60 w-full overflow-hidden">
                             {kapakResmi ? (
-                                <img src={`http://localhost:1337${kapakResmi}`} alt={ilan.baslik} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+                                <img src={`https://ezm-backend-production.up.railway.app${kapakResmi}`} alt={ilan.baslik} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
                             ) : ( <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">Görsel Yok</div> )}
                             
                             {/* DÜZELTME: Durum Etiketi (Kategori) */}

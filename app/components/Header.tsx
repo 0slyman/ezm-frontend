@@ -20,9 +20,9 @@ export default function Header() {
     async function fetchData() {
         try {
             const [resGlobal, resMenu, resHizmet] = await Promise.all([
-                fetch("http://localhost:1337/api/global"),
-                fetch("http://localhost:1337/api/menus?sort=sira:asc"),
-                fetch("http://localhost:1337/api/hizmets")
+                fetch("https://ezm-backend-production.up.railway.app/api/global"),
+                fetch("https://ezm-backend-production.up.railway.app/api/menus?sort=sira:asc"),
+                fetch("https://ezm-backend-production.up.railway.app/api/hizmets")
             ]);
 
             const jsonGlobal = await resGlobal.json();

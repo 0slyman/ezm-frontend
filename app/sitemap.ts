@@ -7,7 +7,7 @@ async function fetchData(endpoint: string) {
   try {
     // NOT: Siteyi sunucuya yüklediğimizde buradaki localhost yerine Canlı API (Strapi) linkini yazacağız.
     // Şimdilik build alırken hata vermemesi için localhost kalabilir.
-    const res = await fetch(`http://localhost:1337/api/${endpoint}?populate=*`, { cache: 'no-store' });
+    const res = await fetch(`https://ezm-backend-production.up.railway.app/api/${endpoint}?populate=*`, { cache: 'no-store' });
     const json = await res.json();
     return json.data || [];
   } catch (error) {

@@ -5,7 +5,7 @@ const playfair = Playfair_Display({ subsets: ['latin'] });
 
 async function getGlobalData() {
   try {
-    const res = await fetch("http://localhost:1337/api/global", { cache: 'no-store' });
+    const res = await fetch("https://ezm-backend-production.up.railway.app/api/global", { cache: 'no-store' });
     const json = await res.json();
     return json.data;
   } catch (error) { return null; }

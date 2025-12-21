@@ -24,7 +24,7 @@ export default function IlanlarPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:1337/api/ilans?populate=*&sort=publishedAt:desc");
+        const res = await fetch("https://ezm-backend-production.up.railway.app/api/ilans?populate=*&sort=publishedAt:desc");
         const json = await res.json();
         setIlanlar(json.data || []);
       } catch (error) {
@@ -170,7 +170,7 @@ export default function IlanlarPage() {
                                 <Link key={ilan.id} href={`/ilanlar/${ilan.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-teal-100 hover:border-teal-300 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                                     <div className="h-60 relative overflow-hidden">
                                         {kapak ? (
-                                            <img src={`http://localhost:1337${kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+                                            <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
                                         ) : (<div className="w-full h-full bg-teal-100"></div>)}
                                         <span className={`absolute top-3 left-3 text-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm ${ilan.Kategori === 'Satılık' ? 'bg-red-600' : 'bg-blue-600'}`}>
                                             {ilan.Kategori}

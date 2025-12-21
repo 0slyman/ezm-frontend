@@ -18,7 +18,7 @@ function formatDate(dateString: string) {
 // --- VERİ ÇEKME FONKSİYONLARI ---
 async function getMakale(slug: string) {
   try {
-    const res = await fetch(`http://localhost:1337/api/makales?filters[slug][$eq]=${slug}&populate=*`, { cache: 'no-store' });
+    const res = await fetch(`https://ezm-backend-production.up.railway.app/api/makales?filters[slug][$eq]=${slug}&populate=*`, { cache: 'no-store' });
     const json = await res.json();
     return json.data?.[0]; 
   } catch (error) { return null; }
@@ -26,10 +26,10 @@ async function getMakale(slug: string) {
 
 async function getSidebarData(currentSlug: string) {
   try {
-    const resBlog = await fetch(`http://localhost:1337/api/makales?filters[slug][$ne]=${currentSlug}&pagination[limit]=3&populate=*`, { cache: 'no-store' });
+    const resBlog = await fetch(`https://ezm-backend-production.up.railway.app/api/makales?filters[slug][$ne]=${currentSlug}&pagination[limit]=3&populate=*`, { cache: 'no-store' });
     const jsonBlog = await resBlog.json();
 
-    const resIlan = await fetch(`http://localhost:1337/api/ilans?pagination[limit]=3&populate=*`, { cache: 'no-store' });
+    const resIlan = await fetch(`https://ezm-backend-production.up.railway.app/api/ilans?pagination[limit]=3&populate=*`, { cache: 'no-store' });
     const jsonIlan = await resIlan.json();
 
     return { otherBlogs: jsonBlog.data || [], listings: jsonIlan.data || [] };
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!makale) return { title: "Makale Bulunamadı" };
 
-  const kapakUrl = makale.kapak?.url ? `http://localhost:1337${makale.kapak.url}` : undefined;
+  const kapakUrl = makale.kapak?.url ? `https://ezm-backend-production.up.railway.app${makale.kapak.url}` : undefined;
 
   return {
     title: makale.baslik,
@@ -176,7 +176,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     '@type': 'Article',
     headline: makale.baslik,
     description: makale.ozet,
-    image: kapak ? `http://localhost:1337${kapak}` : undefined,
+    image: kapak ? `https://ezm-backend-production.up.railway.app${kapak}` : undefined,
     datePublished: makale.publishedAt,
     author: { '@type': 'Organization', name: 'EZM Danışmanlık', url: 'https://www.ezm-danismanlik.com' },
     mainEntityOfPage: {
@@ -240,7 +240,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                     {/* Makale Kapak Görseli */}
                     {kapak && (
                         <div className="h-[300px] md:h-[450px] rounded-2xl overflow-hidden shadow-lg mb-10 border border-gray-100">
-                            <img src={`http://localhost:1337${kapak}`} alt={makale.baslik} className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"/>
+                            <img src={`https://ezm-backend-production.up.railway.app${kapak}`} alt={makale.baslik} className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"/>
                         </div>
                     )}
 
@@ -282,7 +282,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                         {otherBlogs.length > 0 ? otherBlogs.map((blog: any) => (
                             <Link key={blog.id} href={`/blog/${blog.slug}`} className="group flex gap-4 items-start">
                                 <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 relative">
-                                    {blog.kapak?.url && <img src={`http://localhost:1337${blog.kapak.url}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}
+                                    {blog.kapak?.url && <img src={`https://ezm-backend-production.up.railway.app${blog.kapak.url}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2 text-sm">
@@ -321,7 +321,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                                 <Link key={ilan.id} href={`/ilanlar/${ilan.slug}`} className="block group bg-gray-50 rounded-xl p-3 shadow-sm hover:shadow-md transition-all border border-gray-200 hover:border-teal-200">
                                     <div className="h-36 rounded-lg overflow-hidden relative mb-3">
                                         {ilan.gorseller?.[0]?.url ? (
-                                            <img src={`http://localhost:1337${ilan.gorseller[0].url}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                            <img src={`https://ezm-backend-production.up.railway.app${ilan.gorseller[0].url}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                                         ) : (<div className="w-full h-full bg-gray-200"></div>)}
                                         <span className="absolute bottom-2 right-2 bg-slate-900/90 backdrop-blur text-white text-xs font-bold px-2 py-1 rounded shadow-sm">{fiyat}</span>
                                     </div>

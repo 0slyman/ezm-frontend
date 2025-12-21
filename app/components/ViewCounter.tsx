@@ -15,7 +15,7 @@ export default function ViewCounter({ id, collection, currentViews }: ViewCounte
     const incrementView = async () => {
       try {
         // Strapi'ye PUT isteği atarak sayıyı 1 artırıyoruz
-        await fetch(`http://localhost:1337/api/${collection}/${id}`, {
+        await fetch(`https://ezm-backend-production.up.railway.app/api/${collection}/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

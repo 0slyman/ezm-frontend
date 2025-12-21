@@ -6,7 +6,7 @@ const playfair = Playfair_Display({ subsets: ['latin'] });
 
 async function getHizmet(slug: string) {
   try {
-    const res = await fetch(`http://localhost:1337/api/hizmets?filters[slug][$eq]=${slug}&populate=*`, { cache: 'no-store' });
+    const res = await fetch(`https://ezm-backend-production.up.railway.app/api/hizmets?filters[slug][$eq]=${slug}&populate=*`, { cache: 'no-store' });
     if (!res.ok) throw new Error("Veri getirilemedi");
     const json = await res.json();
     return json.data[0]; 
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${hizmet.baslik} - Profesyonel Destek`,
       description: hizmet.kisa_aciklama,
-      images: ikonUrl ? [{ url: `http://localhost:1337${ikonUrl}` }] : [],
+      images: ikonUrl ? [{ url: `https://ezm-backend-production.up.railway.app${ikonUrl}` }] : [],
     },
   };
 }
@@ -78,7 +78,7 @@ export default async function HizmetDetayPage({ params }: { params: Promise<{ sl
     description: hizmet.kisa_aciklama,
     provider: { '@type': 'Organization', name: 'EZM Danışmanlık' },
     areaServed: "Konya",
-    image: ikonUrl ? `http://localhost:1337${ikonUrl}` : undefined,
+    image: ikonUrl ? `https://ezm-backend-production.up.railway.app${ikonUrl}` : undefined,
   };
 
   return (
@@ -91,7 +91,7 @@ export default async function HizmetDetayPage({ params }: { params: Promise<{ sl
         <div className="container mx-auto px-6 relative z-20 text-center flex flex-col items-center pt-20">
             {ikonUrl && (
             <div className="mb-10 w-48 h-48 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center overflow-hidden relative group">
-               <img src={`http://localhost:1337${ikonUrl}`} alt={hizmet.baslik} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+               <img src={`https://ezm-backend-production.up.railway.app${ikonUrl}`} alt={hizmet.baslik} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
             </div>
             )}
             <h1 className={`${playfair.className} text-5xl md:text-7xl font-extrabold text-white mb-8 tracking-wide drop-shadow-2xl leading-tight`}>{hizmet.baslik}</h1>
