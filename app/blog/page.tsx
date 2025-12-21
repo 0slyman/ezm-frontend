@@ -21,7 +21,6 @@ export default async function BlogPage() {
   const makaleler = data.data;
 
   return (
-    // DÜZELTME: Arka plan bg-teal-50
     <main className="min-h-screen bg-teal-50 font-sans pt-32 pb-20">
       
       <div className="container mx-auto px-6 text-center mb-16">
@@ -34,12 +33,14 @@ export default async function BlogPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {makaleler.map((blog: any) => {
                 const kapak = blog.kapak?.url;
+                // RESİM URL KONTROLÜ
+                const imageSrc = kapak?.startsWith('http') ? kapak : `https://ezm-backend-production.up.railway.app${kapak}`;
+
                 return (
-                    // Kart Border teal-100
                     <Link key={blog.id} href={`/blog/${blog.slug}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-teal-100 flex flex-col h-full">
                         <div className="h-56 relative overflow-hidden">
                             {kapak ? (
-                                <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                <img src={imageSrc} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                             ) : (<div className="w-full h-full bg-teal-100"></div>)}
                             <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-bold text-slate-900 shadow-sm">
                                 {formatDate(blog.publishedAt)}

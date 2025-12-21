@@ -13,19 +13,27 @@ async function getHizmet(slug: string) {
   } catch (error) { return null; }
 }
 
+// URL DÜZELTİCİ
+function getFullUrl(url: string) {
+    if (!url) return null;
+    return url.startsWith('http') ? url : `https://ezm-backend-production.up.railway.app${url}`;
+}
+
 // --- SEO: DYNAMIC METADATA ---
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const hizmet = await getHizmet(resolvedParams.slug);
   if (!hizmet) return { title: "Hizmet Bulunamadı" };
-  const ikonUrl = hizmet.ikon?.url || hizmet.ikon?.[0]?.url;
+  
+  const ikonUrl = getFullUrl(hizmet.ikon?.url || hizmet.ikon?.[0]?.url);
+  
   return {
     title: hizmet.baslik,
     description: hizmet.kisa_aciklama,
     openGraph: {
       title: `${hizmet.baslik} - Profesyonel Destek`,
       description: hizmet.kisa_aciklama,
-      images: ikonUrl ? [{ url: `https://ezm-backend-production.up.railway.app${ikonUrl}` }] : [],
+      images: ikonUrl ? [{ url: ikonUrl }] : [],
     },
   };
 }
@@ -68,7 +76,7 @@ export default async function HizmetDetayPage({ params }: { params: Promise<{ sl
 
   if (!hizmet) return <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-gray-50"><h1 className="text-2xl font-bold text-gray-400">Hizmet bulunamadı.</h1><Link href="/" className="text-slate-800 hover:underline">Anasayfaya Dön</Link></div>;
 
-  const ikonUrl = hizmet.ikon?.url || hizmet.ikon?.[0]?.url;
+  const ikonUrl = getFullUrl(hizmet.ikon?.url || hizmet.ikon?.[0]?.url);
 
   // SEO: SCHEMA
   const jsonLd = {
@@ -78,7 +86,7 @@ export default async function HizmetDetayPage({ params }: { params: Promise<{ sl
     description: hizmet.kisa_aciklama,
     provider: { '@type': 'Organization', name: 'EZM Danışmanlık' },
     areaServed: "Konya",
-    image: ikonUrl ? `https://ezm-backend-production.up.railway.app${ikonUrl}` : undefined,
+    image: ikonUrl || undefined,
   };
 
   return (
@@ -91,7 +99,7 @@ export default async function HizmetDetayPage({ params }: { params: Promise<{ sl
         <div className="container mx-auto px-6 relative z-20 text-center flex flex-col items-center pt-20">
             {ikonUrl && (
             <div className="mb-10 w-48 h-48 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center overflow-hidden relative group">
-               <img src={`https://ezm-backend-production.up.railway.app${ikonUrl}`} alt={hizmet.baslik} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+               <img src={ikonUrl} alt={hizmet.baslik} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
             </div>
             )}
             <h1 className={`${playfair.className} text-5xl md:text-7xl font-extrabold text-white mb-8 tracking-wide drop-shadow-2xl leading-tight`}>{hizmet.baslik}</h1>

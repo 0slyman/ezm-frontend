@@ -15,6 +15,12 @@ function formatDate(dateString: string) {
   return new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }
 
+// URL DÜZELTİCİ
+function getFullUrl(url: string) {
+    if (!url) return null;
+    return url.startsWith('http') ? url : `https://ezm-backend-production.up.railway.app${url}`;
+}
+
 // --- VERİ ÇEKME FONKSİYONLARI ---
 async function getMakale(slug: string) {
   try {
@@ -43,7 +49,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!makale) return { title: "Makale Bulunamadı" };
 
-  const kapakUrl = makale.kapak?.url ? `https://ezm-backend-production.up.railway.app${makale.kapak.url}` : undefined;
+  const kapakUrl = getFullUrl(makale.kapak?.url);
 
   return {
     title: makale.baslik,
@@ -119,9 +125,10 @@ function RichTextRenderer({ content }: { content: any }) {
             );
         }
         if (block.type === 'image') {
+            const imgUrl = getFullUrl(block.image.url);
             return (
                 <div key={index} className="my-8">
-                    <img src={block.image.url} alt={block.image.alternativeText || 'Blog görseli'} className="rounded-2xl w-full object-cover shadow-lg border border-gray-100" />
+                    <img src={imgUrl || ""} alt={block.image.alternativeText || 'Blog görseli'} className="rounded-2xl w-full object-cover shadow-lg border border-gray-100" />
                     {block.image.caption && <p className="text-center text-sm text-gray-500 mt-2 italic">{block.image.caption}</p>}
                 </div>
             );
@@ -168,7 +175,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   if (!makale) return <div className="min-h-screen flex items-center justify-center pt-20 bg-gray-50 text-slate-500">Makale bulunamadı veya yüklenemedi.</div>;
 
   const { otherBlogs, listings } = await getSidebarData(resolvedParams.slug);
-  const kapak = makale.kapak?.url;
+  const kapak = getFullUrl(makale.kapak?.url);
 
   // SEO: SCHEMA.ORG JSON-LD (Article)
   const jsonLd = {
@@ -176,7 +183,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     '@type': 'Article',
     headline: makale.baslik,
     description: makale.ozet,
-    image: kapak ? `https://ezm-backend-production.up.railway.app${kapak}` : undefined,
+    image: kapak || undefined,
     datePublished: makale.publishedAt,
     author: { '@type': 'Organization', name: 'EZM Danışmanlık', url: 'https://www.ezm-danismanlik.com' },
     mainEntityOfPage: {
@@ -240,7 +247,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                     {/* Makale Kapak Görseli */}
                     {kapak && (
                         <div className="h-[300px] md:h-[450px] rounded-2xl overflow-hidden shadow-lg mb-10 border border-gray-100">
-                            <img src={`https://ezm-backend-production.up.railway.app${kapak}`} alt={makale.baslik} className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"/>
+                            <img src={kapak} alt={makale.baslik} className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"/>
                         </div>
                     )}
 
@@ -279,19 +286,22 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                         Diğer Yazılar
                     </h3>
                     <div className="space-y-6">
-                        {otherBlogs.length > 0 ? otherBlogs.map((blog: any) => (
-                            <Link key={blog.id} href={`/blog/${blog.slug}`} className="group flex gap-4 items-start">
-                                <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 relative">
-                                    {blog.kapak?.url && <img src={`https://ezm-backend-production.up.railway.app${blog.kapak.url}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-slate-900 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2 text-sm">
-                                        {blog.baslik}
-                                    </h4>
-                                    <span className="text-xs text-teal-600 mt-1 block font-medium">Oku →</span>
-                                </div>
-                            </Link>
-                        )) : <p className="text-sm text-gray-400">Başka yazı bulunamadı.</p>}
+                        {otherBlogs.length > 0 ? otherBlogs.map((blog: any) => {
+                            const bKapak = getFullUrl(blog.kapak?.url);
+                            return (
+                                <Link key={blog.id} href={`/blog/${blog.slug}`} className="group flex gap-4 items-start">
+                                    <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 relative">
+                                        {bKapak && <img src={bKapak} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-slate-900 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2 text-sm">
+                                            {blog.baslik}
+                                        </h4>
+                                        <span className="text-xs text-teal-600 mt-1 block font-medium">Oku →</span>
+                                    </div>
+                                </Link>
+                            );
+                        }) : <p className="text-sm text-gray-400">Başka yazı bulunamadı.</p>}
                     </div>
                 </div>
 
@@ -317,11 +327,12 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                     <div className="space-y-5">
                         {listings.map((ilan: any) => {
                              const fiyat = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(ilan.fiyat);
+                             const iKapak = getFullUrl(ilan.gorseller?.[0]?.url);
                              return (
                                 <Link key={ilan.id} href={`/ilanlar/${ilan.slug}`} className="block group bg-gray-50 rounded-xl p-3 shadow-sm hover:shadow-md transition-all border border-gray-200 hover:border-teal-200">
                                     <div className="h-36 rounded-lg overflow-hidden relative mb-3">
-                                        {ilan.gorseller?.[0]?.url ? (
-                                            <img src={`https://ezm-backend-production.up.railway.app${ilan.gorseller[0].url}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                        {iKapak ? (
+                                            <img src={iKapak} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                                         ) : (<div className="w-full h-full bg-gray-200"></div>)}
                                         <span className="absolute bottom-2 right-2 bg-slate-900/90 backdrop-blur text-white text-xs font-bold px-2 py-1 rounded shadow-sm">{fiyat}</span>
                                     </div>

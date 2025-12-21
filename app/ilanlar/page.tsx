@@ -165,12 +165,14 @@ export default function IlanlarPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {filteredIlanlar.map((ilan: any) => {
                             const kapak = ilan.gorseller?.[0]?.url;
+                            const imageSrc = kapak?.startsWith('http') ? kapak : `https://ezm-backend-production.up.railway.app${kapak}`;
                             const fiyat = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(ilan.fiyat);
+                            
                             return (
                                 <Link key={ilan.id} href={`/ilanlar/${ilan.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-teal-100 hover:border-teal-300 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                                     <div className="h-60 relative overflow-hidden">
                                         {kapak ? (
-                                            <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+                                            <img src={imageSrc} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
                                         ) : (<div className="w-full h-full bg-teal-100"></div>)}
                                         <span className={`absolute top-3 left-3 text-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm ${ilan.Kategori === 'Satılık' ? 'bg-red-600' : 'bg-blue-600'}`}>
                                             {ilan.Kategori}

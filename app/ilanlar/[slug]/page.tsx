@@ -7,6 +7,12 @@ import { Metadata } from "next";
 
 const playfair = Playfair_Display({ subsets: ['latin'] });
 
+// URL DÜZELTİCİ
+function getFullUrl(url: string) {
+    if (!url) return null;
+    return url.startsWith('http') ? url : `https://ezm-backend-production.up.railway.app${url}`;
+}
+
 // --- VERİ ÇEKME ---
 async function getIlan(slug: string) {
   try {
@@ -47,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!ilan) return { title: "İlan Bulunamadı" };
 
-  const kapak = ilan.gorseller?.[0]?.url || ilan.gorseller?.url;
+  const kapak = getFullUrl(ilan.gorseller?.[0]?.url || ilan.gorseller?.url);
   const fiyat = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(ilan.fiyat);
 
   return {
@@ -56,7 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${ilan.baslik} | EZM Gayrimenkul`,
       description: `Fiyat: ${fiyat} - ${ilan.konum}`,
-      images: kapak ? [{ url: `https://ezm-backend-production.up.railway.app${kapak}` }] : [],
+      images: kapak ? [{ url: kapak }] : [],
     },
   };
 }
@@ -129,13 +135,13 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
     '@type': 'Product',
     name: ilan.baslik,
     description: metaDescription,
-    image: gorseller?.[0]?.url ? `https://ezm-backend-production.up.railway.app${gorseller[0].url}` : undefined,
+    image: getFullUrl(gorseller?.[0]?.url),
     offers: {
       '@type': 'Offer',
       priceCurrency: 'TRY',
       price: ilan.fiyat,
       availability: 'https://schema.org/InStock',
-      url: `https://www.ezm-danismanlik.com/ilanlar/${ilan.slug}` // GÜNCELLENEN ALAN ADI
+      url: `https://www.ezm-danismanlik.com/ilanlar/${ilan.slug}`
     }
   };
 
@@ -203,11 +209,11 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
                         <h3 className={`${playfair.className} text-xl font-bold text-slate-900 mb-6 pb-3 border-b border-gray-100`}>Benzer İlanlar</h3>
                         <div className="space-y-5">
                             {benzerIlanlar.length > 0 ? benzerIlanlar.map((b: any) => {
-                                const b_kapak = b.gorseller?.[0]?.url || b.gorseller?.url;
+                                const b_kapak = getFullUrl(b.gorseller?.[0]?.url || b.gorseller?.url);
                                 const b_fiyat = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(b.fiyat);
                                 return (
                                     <Link key={b.id} href={`/ilanlar/${b.slug}`} className="group flex gap-3 items-start p-2 rounded-xl hover:bg-slate-50 transition-colors">
-                                        <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-slate-200 relative">{b_kapak && <img src={`https://ezm-backend-production.up.railway.app${b_kapak}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}</div>
+                                        <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-slate-200 relative">{b_kapak && <img src={b_kapak} className="w-full h-full object-cover group-hover:scale-110 transition-transform"/>}</div>
                                         <div className="flex-grow"><h4 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-teal-600 transition-colors">{b.baslik}</h4><p className="text-teal-700 font-bold text-xs mt-1">{b_fiyat}</p><div className="text-[10px] text-slate-400 mt-1 flex items-center gap-2"><span>{b.emlak_tipi}</span><span>•</span><span>{b.konum?.split(" ")[0]}</span></div></div>
                                     </Link>
                                 )

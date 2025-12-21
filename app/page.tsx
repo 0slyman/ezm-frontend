@@ -51,23 +51,17 @@ export default async function Home() {
       
       {/* 1. HERO ALANI */}
       <section className="relative w-full min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-6 overflow-hidden bg-slate-900 pt-24 pb-12 md:pt-0 md:pb-0">
-        
-        {/* Arka Plan */}
         <div className="absolute inset-0 z-0">
             <img src="/bg.jpg" alt="Arka Plan" className="w-full h-full object-cover object-center grayscale-[20%]" />
             <div className="absolute inset-0 bg-slate-950/70"></div>
             <div className="absolute bottom-0 left-0 w-full h-24 md:h-48 bg-gradient-to-t from-teal-50 to-transparent"></div>
         </div>
 
-        {/* İçerik */}
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center justify-center w-full h-full">
-            
-            {/* Başlık */}
             <h1 className={`${playfair.className} text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 md:mb-10 tracking-wide leading-tight drop-shadow-2xl`}>
               EZM <span className="text-gray-300 block md:inline">Danışmanlık</span>
             </h1>
             
-            {/* Açıklama Kutusu */}
             <div className="bg-slate-900/60 backdrop-blur-md p-6 md:p-10 rounded-2xl border border-white/10 shadow-2xl max-w-sm sm:max-w-2xl md:max-w-4xl mx-auto mb-8 md:mb-12">
                 <p className="text-sm sm:text-base md:text-2xl text-slate-200 leading-relaxed font-light">
                     <span className="font-semibold text-white">Hukuk, Bilişim</span> ve <span className="font-semibold text-white">Gayrimenkul</span> süreçlerinizde; 
@@ -77,7 +71,6 @@ export default async function Home() {
                 <p className="hidden md:block text-sm text-gray-400 tracking-[0.2em] uppercase font-medium">Geleceğe Güvenle Bakın</p>
             </div>
 
-            {/* Butonlar */}
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0">
                 <button className="w-full sm:w-auto px-8 py-3 md:px-10 md:py-4 bg-white text-slate-900 rounded-xl font-bold hover:bg-gray-100 transition shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:-translate-y-1 text-base md:text-lg">
                   Hizmetleri Keşfet
@@ -103,15 +96,14 @@ export default async function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {hizmetler.map((hizmet: any) => {
             const ikonUrl = hizmet.ikon?.url || hizmet.ikon?.[0]?.url;
+            const ikonSrc = ikonUrl?.startsWith('http') ? ikonUrl : `https://ezm-backend-production.up.railway.app${ikonUrl}`;
+
             return (
               <div key={hizmet.id} className="group bg-white p-6 md:p-8 rounded-3xl border border-teal-100 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-start">
-                {/* DÜZELTME: İkon kutusu daha da büyütüldü ve padding ayarlandı */}
                 <div className="w-24 h-24 md:w-32 md:h-32 bg-slate-50 text-slate-700 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform overflow-hidden shadow-inner p-4 group-hover:bg-slate-100">
                   {ikonUrl ? (
-                    // DÜZELTME: İkonun kutuya tam sığması için object-contain korundu
-                    <img src={`https://ezm-backend-production.up.railway.app${ikonUrl}`} alt={hizmet.baslik} className="w-full h-full object-contain" />
+                    <img src={ikonSrc} alt={hizmet.baslik} className="w-full h-full object-contain" />
                   ) : (
-                    // DÜZELTME: Varsayılan ikon da büyütüldü
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 md:w-16 md:h-16"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                   )}
                 </div>
@@ -139,12 +131,14 @@ export default async function Home() {
                 {ilanlar.map((ilan: any) => {
                     const kapak = ilan.gorseller?.[0]?.url;
                     const fiyat = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(ilan.fiyat);
+                    const imageSrc = kapak?.startsWith('http') ? kapak : `https://ezm-backend-production.up.railway.app${kapak}`;
+                    
                     return (
                         <Link key={ilan.id} href={`/ilanlar/${ilan.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-teal-100 hover:shadow-xl transition-all">
                             <div className="h-56 md:h-64 relative overflow-hidden">
                                 {kapak ? (
                                   <img 
-                                      src={kapak.startsWith('http') ? kapak : `https://ezm-backend-production.up.railway.app${kapak}`} 
+                                      src={imageSrc} 
                                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                   />
                                 ) : (<div className="w-full h-full bg-slate-200"></div>)}
@@ -189,11 +183,13 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {makaleler.map((blog: any) => {
                     const kapak = blog.kapak?.url;
+                    const imageSrc = kapak?.startsWith('http') ? kapak : `https://ezm-backend-production.up.railway.app${kapak}`;
+                    
                     return (
                         <Link key={blog.id} href={`/blog/${blog.slug}`} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-teal-100">
                             <div className="h-48 relative overflow-hidden">
                                 {kapak ? (
-                                    <img src={`https://ezm-backend-production.up.railway.app${kapak}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                                    <img src={imageSrc} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                                 ) : (<div className="w-full h-full bg-slate-200"></div>)}
                                 <div className="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1 rounded text-xs font-bold text-slate-900">
                                     {formatDate(blog.tarih) || "Blog"}
