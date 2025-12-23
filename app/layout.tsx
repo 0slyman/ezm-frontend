@@ -24,17 +24,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "./", 
   },
-  // --- NOT: icons kısmı silindi, favicon.ico otomatik algılanacak ---
+  // --- DİKKAT: Buraya tekrar icons veya verification ekleme, aşağıda tek bir tane var ---
   
-  // --- GOOGLE DOĞRULAMA ---
-  verification: {
-    google: "OTmcvd6h4FXipsnosZfNBLgI_NqhldI-mM8q4KjTvco",
-  },
-  // --- EKLENEN KISIM: FAVICON ---
-  icons: {
-    icon: '/icon.png',
-  },
-  // --- EKLENEN KISIM: GOOGLE DOĞRULAMA ---
   verification: {
     google: "OTmcvd6h4FXipsnosZfNBLgI_NqhldI-mM8q4KjTvco",
   },
@@ -70,7 +61,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Google Analytics ID (.env.local dosyasından gelir)
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
   return (
@@ -88,7 +78,6 @@ export default function RootLayout({
           shadow="0 0 10px #0d9488,0 0 5px #0d9488"
         />
         
-        {/* Google Analytics Bileşeni */}
         <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
         
         <Header />
