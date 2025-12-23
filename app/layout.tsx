@@ -30,6 +30,14 @@ export const metadata: Metadata = {
   verification: {
     google: "OTmcvd6h4FXipsnosZfNBLgI_NqhldI-mM8q4KjTvco",
   },
+  // --- EKLENEN KISIM: FAVICON ---
+  icons: {
+    icon: '/icon.png',
+  },
+  // --- EKLENEN KISIM: GOOGLE DOĞRULAMA ---
+  verification: {
+    google: "OTmcvd6h4FXipsnosZfNBLgI_NqhldI-mM8q4KjTvco",
+  },
   openGraph: {
     title: "EZM Danışmanlık",
     description: "Profesyonel Çözüm Ortağınız",
