@@ -110,8 +110,15 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
   const benzerIlanlar = await getBenzerIlanlar(ilan.Kategori, ilan.emlak_tipi, ilan.slug);
   const formatliFiyat = new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', maximumFractionDigits: 0 }).format(ilan.fiyat);
   const gorseller = ilan.gorseller || [];
+  
+  // --- WHATSAPP DÜZELTMESİ ---
   const rawPhone = global?.telefon || "905555555555"; 
-  const cleanPhone = rawPhone.replace(/[^0-9]/g, ''); 
+  let cleanPhone = rawPhone.replace(/[^0-9]/g, ''); 
+  // Başında 0 varsa sil
+  if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+  // Başında 90 yoksa ekle (Türkiye Kodu)
+  if (!cleanPhone.startsWith('90')) cleanPhone = '90' + cleanPhone;
+  
   const wpLink = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Merhaba, "${ilan.baslik}" ilanı hakkında bilgi almak istiyorum.`)}`;
   const icDonanimlar = ilan.ic_donanimlar || [];
   const disDonanimlar = ilan.dis_donanimlar || [];
@@ -200,7 +207,7 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
                             </span>
                         </div>
                         
-                        {/* Bina Yaşı (DÜZELTİLDİ: 0 olsa bile göster) */}
+                        {/* Bina Yaşı */}
                         {(ilan.bina_yasi !== null && ilan.bina_yasi !== undefined) && (
                             <div>
                                 <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Bina Yaşı</span>
@@ -211,7 +218,7 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
                             </div>
                         )}
                         
-                        {/* Kat (DÜZELTİLDİ: 0 olsa bile göster) */}
+                        {/* Kat */}
                         {(ilan.bulundugu_kat !== null && ilan.bulundugu_kat !== undefined) && (
                             <div>
                                 <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Kat</span>
@@ -247,7 +254,28 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
                     <FeaturesList title="İç Özellikler" items={icDonanimlar} />
                     <FeaturesList title="Dış Özellikler" items={disDonanimlar} />
                 </div>
+
                 <div className="prose prose-lg prose-slate max-w-none"><h3 className={`${playfair.className} text-2xl font-bold text-slate-900 border-b border-gray-200 pb-4 mb-6`}>Açıklama</h3><RichTextRenderer content={ilan.aciklama} /></div>
+                
+                {/* --- HARİTA BÖLÜMÜ (EKLENDİ) --- */}
+                {ilan.konum && (
+                <div className="mt-8">
+                     <h3 className={`${playfair.className} text-2xl font-bold text-slate-900 border-b border-gray-200 pb-4 mb-6`}>Konum</h3>
+                     <div className="w-full h-[400px] bg-slate-100 rounded-3xl overflow-hidden border border-gray-200 shadow-sm">
+                         <iframe 
+                            width="100%" 
+                            height="100%" 
+                            id="gmap_canvas" 
+                            src={`https://maps.google.com/maps?q=${encodeURIComponent(ilan.konum + ", Konya")}&t=&z=15&ie=UTF8&iwloc=&output=embed`} 
+                            frameBorder="0" 
+                            scrolling="no" 
+                            marginHeight={0} 
+                            marginWidth={0}
+                        ></iframe>
+                     </div>
+                </div>
+                )}
+
                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex items-center justify-between flex-wrap gap-4"><span className="font-bold text-slate-700">Bu ilanı arkadaşlarınızla paylaşın:</span><ShareButtons title={ilan.baslik} /></div>
             </div>
             

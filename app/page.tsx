@@ -52,6 +52,7 @@ export default async function Home() {
       {/* 1. HERO ALANI */}
       <section className="relative w-full min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-6 overflow-hidden bg-slate-900 pt-24 pb-12 md:pt-0 md:pb-0">
         <div className="absolute inset-0 z-0">
+            {/* Arka plan resmi yoksa düz renk görünsün diye bg-slate-900 var, varsa resim çıkar */}
             <img src="/bg.jpg" alt="Arka Plan" className="w-full h-full object-cover object-center grayscale-[20%]" />
             <div className="absolute inset-0 bg-slate-950/70"></div>
             <div className="absolute bottom-0 left-0 w-full h-24 md:h-48 bg-gradient-to-t from-teal-50 to-transparent"></div>
@@ -72,11 +73,15 @@ export default async function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0">
-                <button className="w-full sm:w-auto px-8 py-3 md:px-10 md:py-4 bg-white text-slate-900 rounded-xl font-bold hover:bg-gray-100 transition shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:-translate-y-1 text-base md:text-lg">
-                  Hizmetleri Keşfet
-                </button>
+                {/* --- DÜZELTME: Link Eklendi --- */}
+                <Link href="#hizmetler" className="w-full sm:w-auto">
+                    <button className="w-full px-8 py-3 md:px-10 md:py-4 bg-white text-slate-900 rounded-xl font-bold hover:bg-gray-100 transition shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:-translate-y-1 text-base md:text-lg">
+                      Hizmetleri Keşfet
+                    </button>
+                </Link>
+                
                 <Link href="/ilanlar" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-auto px-8 py-3 md:px-10 md:py-4 bg-transparent border border-white/20 text-white rounded-xl font-bold hover:bg-white/5 transition backdrop-blur-sm text-base md:text-lg">
+                  <button className="w-full px-8 py-3 md:px-10 md:py-4 bg-transparent border border-white/20 text-white rounded-xl font-bold hover:bg-white/5 transition backdrop-blur-sm text-base md:text-lg">
                     İlanlara Göz At
                   </button>
                 </Link>
@@ -85,7 +90,8 @@ export default async function Home() {
       </section>
 
       {/* 2. HİZMETLER */}
-      <section className="container mx-auto py-16 md:py-24 px-6 relative z-20 -mt-12 md:-mt-24 bg-teal-50 rounded-3xl shadow-sm">
+      {/* --- DÜZELTME: ID Eklendi (id="hizmetler") --- */}
+      <section id="hizmetler" className="container mx-auto py-16 md:py-24 px-6 relative z-20 -mt-12 md:-mt-24 bg-teal-50 rounded-3xl shadow-sm scroll-mt-24">
         <div className="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-12">
           <div className="text-center md:text-left w-full md:w-auto">
             <h2 className={`${playfair.className} text-3xl md:text-4xl font-bold text-slate-900 mb-2`}>Uzmanlık Alanlarımız</h2>
@@ -138,9 +144,9 @@ export default async function Home() {
                             <div className="h-56 md:h-64 relative overflow-hidden">
                                 {kapak ? (
                                   <img 
-                                      src={imageSrc} 
-                                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                  />
+                                        src={imageSrc} 
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                    />
                                 ) : (<div className="w-full h-full bg-slate-200"></div>)}
                                 <span className={`absolute top-3 left-3 text-white px-2 py-1 rounded text-xs font-bold ${ilan.Kategori === 'Satılık' ? 'bg-red-600' : 'bg-blue-600'}`}>
                                     {ilan.Kategori}
@@ -209,7 +215,7 @@ export default async function Home() {
                 })}
             </div>
             <div className="md:hidden text-center mt-8">
-                 <Link href="/blog" className="text-slate-600 font-bold hover:text-teal-600 border-b border-slate-300 pb-1">Tüm Yazıları Gör →</Link>
+                  <Link href="/blog" className="text-slate-600 font-bold hover:text-teal-600 border-b border-slate-300 pb-1">Tüm Yazıları Gör →</Link>
             </div>
         </div>
       </section>

@@ -54,6 +54,7 @@ export default function Header() {
         {/* --- LOGO --- */}
         <Link href="/" className="flex items-center gap-3 z-[1001]" onClick={() => setIsOpen(false)}>
           <div className="bg-white p-1 rounded-lg">
+             {/* GÜNCELLENDİ: Artık public klasöründeki logo.jpg dosyasını çekiyor */}
              <img src="/logo.jpg" alt="Logo" className="w-9 h-9 object-contain rounded-md" />
           </div>
           <div className="flex flex-col">
@@ -66,7 +67,7 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* --- MASAÜSTÜ MENÜ (MD ve Üstü) - DEĞİŞMEDİ --- */}
+        {/* --- MASAÜSTÜ MENÜ (MD ve Üstü) --- */}
         <nav className="hidden md:flex items-center gap-8">
             {menuLinks.map((link: any) => {
                 if (link.baslik === "Hizmetler") {
@@ -111,7 +112,7 @@ export default function Header() {
             )}
         </button>
 
-        {/* --- MOBİL MENÜ (SLIDE DOWN - Ünye Emlak Tarzı) --- */}
+        {/* --- MOBİL MENÜ --- */}
         <div className={`absolute top-full left-0 w-full bg-slate-900 border-t border-white/10 shadow-2xl transition-all duration-300 ease-in-out overflow-hidden md:hidden ${isOpen ? "max-h-[80vh] opacity-100 visible" : "max-h-0 opacity-0 invisible"}`}>
             <div className="flex flex-col p-4 space-y-1 overflow-y-auto max-h-[75vh]">
                 

@@ -53,7 +53,7 @@ export default function IletisimPage() {
                                 <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">📍</div>
                                 <div>
                                     <p className="font-bold text-lg">Adres</p>
-                                    <p className="text-slate-400 text-sm">FEVZİCAKMAK MAH.KENİTRA CAD.10662, SOK DOĞU TİCARET MERKEZİ NO22/D B BLOK<br/>42210 Karatay/Konya</p>
+                                    <p className="text-slate-400 text-sm">FEVZİCAKMAK MAH. KENİTRA CAD. 10662. SOK<br/>DOĞU TİCARET MERKEZİ NO:22/D B BLOK<br/>42210 Karatay/Konya</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
@@ -136,6 +136,19 @@ export default function IletisimPage() {
                 )}
             </div>
         </div>
+
+        {/* --- HARİTA BÖLÜMÜ (DÜZELTİLDİ VE GÜNCELLENDİ) --- */}
+        <div className="mt-16 bg-white rounded-3xl shadow-xl overflow-hidden border border-teal-100 h-[450px]">
+             <iframe 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                src="https://maps.google.com/maps?q=Fevzi%C3%A7akmak%20Mah.%20Kenitra%20Cad.%20Do%C4%9Fu%20Ticaret%20Merkezi%20Konya&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            ></iframe>
+        </div>
+
       </div>
     </main>
   );
