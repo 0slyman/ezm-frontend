@@ -8,7 +8,6 @@ import GoogleAnalytics from "./components/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// --- GÜNCEL ALAN ADI ---
 const SITE_DOMAIN = "https://www.ezm-danismanlik.com"; 
 
 export const metadata: Metadata = {
@@ -24,8 +23,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "./", 
   },
-  // --- DİKKAT: Buraya tekrar icons veya verification ekleme, aşağıda tek bir tane var ---
-  
   verification: {
     google: "OTmcvd6h4FXipsnosZfNBLgI_NqhldI-mM8q4KjTvco",
   },
@@ -81,7 +78,7 @@ export default function RootLayout({
         <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
         
         <Header />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
