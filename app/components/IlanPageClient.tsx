@@ -19,8 +19,7 @@ export default function IlanPageClient({ initialIlanlar }: { initialIlanlar: any
     maxFiyat: "",
   });
 
-  // SEÇENEKLERİ ÇEKME (DÜZELTME: i.Kategori kullanıldı)
-  // ?. operatörü ile veri yoksa hata vermesini engelliyoruz
+  // SEÇENEKLERİ ÇEKME
   const durumlar = Array.from(new Set(initialIlanlar.map(i => i.Kategori).filter(Boolean)));
   const tipler = Array.from(new Set(initialIlanlar.map(i => i.emlak_tipi).filter(Boolean)));
   const konumlar = Array.from(new Set(initialIlanlar.map(i => i.konum).filter(Boolean)));
@@ -30,7 +29,7 @@ export default function IlanPageClient({ initialIlanlar }: { initialIlanlar: any
   const handleSearch = () => {
     let result = initialIlanlar;
 
-    // 1. Durum (Kategori: Satılık/Kiralık) - DÜZELTİLDİ
+    // 1. Durum (Kategori: Satılık/Kiralık)
     if (filters.durum !== "Hepsi") {
         result = result.filter((i: any) => i.Kategori === filters.durum);
     }
@@ -149,11 +148,21 @@ export default function IlanPageClient({ initialIlanlar }: { initialIlanlar: any
                     <div key={ilan.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-md hover:shadow-2xl hover:border-slate-300 transition-all duration-300 flex flex-col h-full">
                         
                         <div className="relative h-60 w-full overflow-hidden">
+                            {/* 🔥 SATILDI ETİKETİ - DAMGA MODU 🔥 */}
+                            {ilan.satildi && (
+                                <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-[1px]">
+                                    <div className="bg-red-600 text-white text-lg font-bold px-6 py-2 -rotate-12 shadow-2xl border-2 border-white tracking-widest uppercase transform group-hover:scale-110 transition-transform duration-300">
+                                        SATILDI
+                                    </div>
+                                </div>
+                            )}
+                            {/* 🔥 SATILDI BİTİŞ 🔥 */}
+
                             {kapakResmi ? (
                                 <img src={`https://ezm-backend-production.up.railway.app${kapakResmi}`} alt={ilan.baslik} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
                             ) : ( <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">Görsel Yok</div> )}
                             
-                            {/* DÜZELTME: Durum Etiketi (Kategori) */}
+                            {/* Kategori Etiketi */}
                             {ilan.Kategori && (
                                 <div className={`absolute top-3 left-3 px-3 py-1 rounded-md font-bold text-xs shadow-sm text-white ${ilan.Kategori === 'Satılık' ? 'bg-red-600' : 'bg-blue-600'}`}>
                                     {ilan.Kategori}

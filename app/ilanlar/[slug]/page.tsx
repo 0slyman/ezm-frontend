@@ -160,6 +160,15 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-gray-100 pb-8">
             <div>
                 <div className="flex flex-wrap gap-3 mb-4 items-center">
+                    
+                    {/* 🔥 YENİ EKLENEN SATILDI ETİKETİ - DETAY SAYFASI İÇİN 🔥 */}
+                    {ilan.satildi && (
+                        <span className="bg-red-600 text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase shadow-sm border border-red-700 animate-pulse">
+                            SATILDI
+                        </span>
+                    )}
+                    {/* 🔥 EKLENDİ 🔥 */}
+
                     <span className={`px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase ${ilan.Kategori === 'Satılık' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>{ilan.Kategori}</span>
                     {ilan.emlak_tipi && (<span className="bg-teal-50 text-teal-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase border border-teal-100">{ilan.emlak_tipi}</span>)}
                     <span className="text-slate-400 text-sm font-medium flex items-center gap-1 ml-1"><svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>{formatDate(ilan.publishedAt)}</span>
@@ -257,22 +266,22 @@ export default async function IlanDetayPage({ params }: { params: Promise<{ slug
 
                 <div className="prose prose-lg prose-slate max-w-none"><h3 className={`${playfair.className} text-2xl font-bold text-slate-900 border-b border-gray-200 pb-4 mb-6`}>Açıklama</h3><RichTextRenderer content={ilan.aciklama} /></div>
                 
-                {/* --- HARİTA BÖLÜMÜ (EKLENDİ) --- */}
+                {/* --- HARİTA BÖLÜMÜ --- */}
                 {ilan.konum && (
                 <div className="mt-8">
-                     <h3 className={`${playfair.className} text-2xl font-bold text-slate-900 border-b border-gray-200 pb-4 mb-6`}>Konum</h3>
-                     <div className="w-full h-[400px] bg-slate-100 rounded-3xl overflow-hidden border border-gray-200 shadow-sm">
-                         <iframe 
+                      <h3 className={`${playfair.className} text-2xl font-bold text-slate-900 border-b border-gray-200 pb-4 mb-6`}>Konum</h3>
+                      <div className="w-full h-[400px] bg-slate-100 rounded-3xl overflow-hidden border border-gray-200 shadow-sm">
+                          <iframe 
                             width="100%" 
                             height="100%" 
                             id="gmap_canvas" 
-                            src={`https://maps.google.com/maps?q=${encodeURIComponent(ilan.konum + ", Konya")}&t=&z=15&ie=UTF8&iwloc=&output=embed`} 
+                            src={`https://maps.google.com/maps?q=$${encodeURIComponent(ilan.konum + ", Konya")}&t=&z=15&ie=UTF8&iwloc=&output=embed`} 
                             frameBorder="0" 
                             scrolling="no" 
                             marginHeight={0} 
                             marginWidth={0}
                         ></iframe>
-                     </div>
+                      </div>
                 </div>
                 )}
 
